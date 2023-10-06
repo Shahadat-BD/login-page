@@ -1,5 +1,5 @@
 import React, { useState,useRef, useContext } from 'react';
-import { GithubAuthProvider, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail  } from "firebase/auth";
+import { GithubAuthProvider,  GoogleAuthProvider, signInWithPopup  } from "firebase/auth";
 
 import {FiEye,FiEyeOff} from 'react-icons/fi'
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ const Login = () => {
     const emailRef = useRef(null)
     const navigate = useNavigate()
 
-    const {setUser,signInUser} = useContext(AuthContext)
+    const {setUser,signInUser, passwordResetEmail} = useContext(AuthContext)
 
   const handleLoginForm = e => {
       e.preventDefault()
@@ -54,12 +54,12 @@ const Login = () => {
         return
     }
 
-    sendPasswordResetEmail(auth,email)
+    passwordResetEmail(email)
     .then(()=>{
         toast('please check your email')
     })
     .catch((error)=>{
-        setError(error.message)
+       setError(error.message)
     })
 
 
@@ -113,7 +113,7 @@ const Login = () => {
                  password
               </label>
               <label className="label mt-3">
-                 <a href="#" onClick={handleForgetPassword} className="label-text-alt link font-bold link-hover">Forgot password</a>
+                 <a onClick={handleForgetPassword} className="label-text-alt link font-bold link-hover">Forgot password</a>
               </label>
           </div>
 
